@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dodawanie nowego wpisu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <form method="post" th:action="@{/add}" th:object="${transaction}">
+        <div class="mb-3">
+            <label class="form-label">Opis</label>
+            <input type="text" class="form-control" th:field="*{description}" placeholder="np. Wypłata">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Kwota</label>
+            <input type="number" class="form-control" step="0.01" th:field="*{amount}" placeholder="np. 3.50">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Typ</label>
+            <select class="form-control" th:field="*{type}">
+                <option th:each="type : ${T(pl.com.itsystems.homeBudget.TransactionType).values()}" th:value="${type}" th:text="${type.description}">
+                </option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Data</label>
+            <input type="date" class="form-control" th:field="*{date}">
+        </div>
+        <button type="submit" class="btn btn-primary">Zapisz</button>
+        <a class="btn btn-primary" th:href="@{/}">Powrót</a>
+    </form>
+</div>
+</body>
+</html>
