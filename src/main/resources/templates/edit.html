@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edycja wpisu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"></head>
+<body>
+<div class="container mb-2 mt-2">
+    <div class="row">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                Menu
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <li><a class="dropdown-item" th:href="@{/}">Strona główna</a></li>
+                <li><a class="dropdown-item" th:href="@{/add}">Dodaj wpis</a></li>
+                <li><a class="dropdown-item" th:href="@{/filter?type=INCOME}">Wyświetl przychody</a></li>
+                <li><a class="dropdown-item" th:href="@{/filter?type=EXPENSE}">Wyświetl wydatki</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container" th:if="${transaction}">
+    <form method="post" th:action="@{/edit}" th:object="${transaction}">
+        <div class="mb-3">
+            <input type="number" hidden="hidden" th:field="*{id}">
+            <label class="form-label">Opis</label>
+            <input type="text" class="form-control" th:field="*{description}" placeholder="np. Wypłata">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Kwota</label>
+            <input type="number" class="form-control" step="0.01" th:field="*{amount}" placeholder="np. 3.50">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Typ</label>
+            <select class="form-control" th:field="*{type}">
+                <option th:each="type : ${T(pl.com.itsystems.homeBudget.TransactionType).values()}" th:value="${type}" th:text="${type.description}">
+                </option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Data</label>
+            <input type="text" class="form-control" th:field="*{date}">
+        </div>
+        <button type="submit" class="btn btn-primary">Zapisz</button>
+        <a class="btn btn-primary" th:href="@{/}">Powrót</a>
+    </form>
+</div>
+<div class="container" th:unless="${transaction}">
+    <div class="row">
+        <div class="row alert alert-danger" role="alert">
+            Brak wpisu o wskazanym id
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

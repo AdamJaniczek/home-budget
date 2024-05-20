@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="|Sortowanie wyników według ${type.description}|"></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                Menu
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <li><a class="dropdown-item" th:href="@{/}">Strona główna</a></li>
+                <li><a class="dropdown-item" th:href="@{/add}">Dodaj wpis</a></li>
+                <li><a class="dropdown-item" th:href="@{/filter?type=INCOME}">Wyświetl przychody</a></li>
+                <li><a class="dropdown-item" th:href="@{/filter?type=EXPENSE}">Wyświetl wydatki</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div th:unless="${transactions.isEmpty()}" class="container">
+    <div class="row">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Opis</th>
+                <th scope="col">Rodzaj wydatku</th>
+                <th scope="col">Kwota (zł)</th>
+                <th scope="col">Data</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="transaction: ${transactions}">
+                <th scope="row" th:text="${transaction.getId()}"></th>
+                <td th:text="${transaction.getDescription()}"></td>
+                <td th:text="${transaction.getType().getDescription()}"></td>
+                <td th:text="${transaction.getAmount()}"></td>
+                <td th:text="${transaction.getDate()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    <div>
+</div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
